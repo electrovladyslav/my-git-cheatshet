@@ -2,12 +2,14 @@
 ## Another git chetsheets
 - Legendary (the only complete guide) Oh sh*t git https://ohshitgit.com/
 - Git CheatSheet https://cs.fyi/guide/git-cheatsheet
-- advanced tips https://www.atlassian.com/git
-- Codeacademy Learn GitHub: Best Practices https://www.codecademy.com/learn/learn-github-best-practices
-- Deploying Websites using Git and GitHub https://www.codecademy.com/learn/deploying-websites-using-git-and-github
-- udemy Git: Become an Expert in Git & GitHub in 4 Hours (free) https://www.udemy.com/course/git-expert-4-hours/
+- Advanced tips https://www.atlassian.com/git
+- Codeacademy
+    - Learn GitHub: Best Practices https://www.codecademy.com/learn/learn-github-best-practices
+    - Deploying Websites using Git and GitHub https://www.codecademy.com/learn/deploying-websites-using-git-and-github
+- Udemy Git: Become an Expert in Git & GitHub in 4 Hours (free) https://www.udemy.com/course/git-expert-4-hours/
 - Git Fundamentals (A to Z) - 10 days free https://www.pluralsight.com/courses/git-fundamentals
 - Version Control with Git (free) https://www.coursera.org/learn/version-control-with-git
+- Interactive simulator of useful git comands - https://learngitbranching.js.org/
 
 
 ### Delete all branches locally except for master
@@ -112,10 +114,10 @@ git apply /path/to/some-changes.patch
 ```shell
 git apply --reject --whitespace=fix mychanges.patch
 ```
-The --reject option will instruct git to not fail if it cannot determine 
-how to apply a patch, but instead to apply individual hunks it can apply 
-and create reject files (.rej) for hunks it cannot apply. 
-Additionally, --whitespace=fix will warn about whitespace errors and try to fix them, 
+The --reject option will instruct git to not fail if it cannot determine
+how to apply a patch, but instead to apply individual hunks it can apply
+and create reject files (.rej) for hunks it cannot apply.
+Additionally, --whitespace=fix will warn about whitespace errors and try to fix them,
 rather than refusing to apply an otherwise applicable hunk.
 
 ## log
@@ -291,7 +293,7 @@ git config --global user.email "send_me_letter@mail.com"
 ```shell
  git config --global alias.co checkout
  ```
- ### Change long `status` to `st`
+### Change long `status` to `st`
 ```shell
  git config --global alias.st status
  ```
@@ -303,11 +305,11 @@ git config --list
 
 
 ## git amend
-### Change the text of last commit to "Right text" 
+### Change the text of last commit to "Right text"
 ```shell
 git commit --amend -m 'Right text'
 ```
-   
+
 ```shell
 git commit -a --amend
 ```
@@ -316,5 +318,79 @@ git commit -a --amend
 ```shell
 git commit --amend --no-edit
 ```
-The resulting commit will replace the incomplete commit. 
+The resulting commit will replace the incomplete commit.
 In this case, everything will be as if the changes in the file occurred in one commit.
+
+## git reset
+
+### Cancel adding README to the staged files for commit
+```shell
+$ git reset -- README
+```
+
+### This command will undo the last commit (but not the changes you made, they will still be saved).
+```shell
+git reset --soft HEAD^
+```
+
+### If the last commit is terrible, you can just remove it altogether:
+```shell
+git reset --hard HEAD^
+```
+
+### Remove commit from remote repo
+All of this works if you haven't published your changes yet. 
+If you have, then the only thing left to do is to make a commit that cancels some other commit:
+```shell
+git revert commit-sha1
+git push
+```
+
+## git blame
+### Check who and when changed file file-name
+```shell
+git blame file-name
+```
+
+ For example, suppose you look at git blame's output. Here -L 150,+11 means "only look at the lines 150 to 150+11"
+```shell
+git blame -L 150,+11 -- git-web--browse.sh
+```
+
+And you want to know the history of what is now line 155.
+Then, use git log. Here, -L 155,155:git-web--browse.sh means "trace the evolution of lines 155 to 155 in the file named git-web--browse.sh".
+```shell
+git log --pretty=short -u -L 155,155:git-web--browse.sh
+```
+
+## git rm
+### Remove application.yml from repo, but keep it on disk
+```shell
+git rm --cached --ignore-unmatch application.yml
+```
+
+```shell
+git mv oldname newname
+```
+is just shorthand for:
+```shell
+mv oldname newname
+git add newname
+git rm oldname
+```
+i.e. it updates the index for both old and new paths automatically.
+
+### push the branch to master with squashing all your commits to 1
+To push my work to master on one of my previous places of work I had to do something like this
+```
+git stash
+git fetch
+git checkout master
+git pull --ff-only
+git checkout username/is15126
+git checkout -b username/is15126b
+git rebase master
+git checkout master
+git merge --squash username/is15126b
+git commit -m "IS-15126: XXX"git push origin master
+```
