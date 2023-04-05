@@ -1,5 +1,5 @@
 # My Git cheatsheet
-## Another git chetsheets
+## Other git cheatsheets and training courses
 - Legendary (the only complete guide) Oh sh*t git https://ohshitgit.com/
 - Git CheatSheet https://cs.fyi/guide/git-cheatsheet
 - Advanced tips https://www.atlassian.com/git
@@ -9,10 +9,10 @@
 - Udemy Git: Become an Expert in Git & GitHub in 4 Hours (free) https://www.udemy.com/course/git-expert-4-hours/
 - Git Fundamentals (A to Z) - 10 days free https://www.pluralsight.com/courses/git-fundamentals
 - Version Control with Git (free) https://www.coursera.org/learn/version-control-with-git
-- Interactive simulator of useful git comands - https://learngitbranching.js.org/
+- Interactive simulator of useful git commands - https://learngitbranching.js.org/
 
 
-### Delete all branches locally except for master
+### Delete all branches locally except for the master
 ```shell
 git branch | grep -v "master" | xargs git branch -D
 ```
