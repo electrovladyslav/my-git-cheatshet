@@ -338,6 +338,11 @@ git reset --soft HEAD^
 git reset --hard HEAD^
 ```
 
+### If you like to reset merging conflicts during aplying the stash:
+```shell
+git reset --merge
+```
+
 ### Remove commit from remote repo
 All of this works if you haven't published your changes yet. 
 If you have, then the only thing left to do is to make a commit that cancels some other commit:
